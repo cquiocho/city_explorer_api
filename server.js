@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 // Create API Routes
 app.get('/location', handleLocation);
-app.get('/weather', handleWeather);
+// app.get('/weather', handleWeather);
 app.use('*', notFoundHandler);
 
 // Generate Constructor Functions for Helper Functions
@@ -28,10 +28,13 @@ function Location(city, geoData) {
     this.search_query = city;
     this.formatted_query = geoData[0].display_name;
     this.latitude = geoData[0].lat;
-    this.longitude = geoData[0].long;
+    this.longitude = geoData[0].lon;
 }
 
-function Weather()
+// function Weather(entry) {
+//     this.description = entry.data.description;
+//     this.datetime = entry.data.datetime;
+// }
 
 // Create Helper Functions & Include Error Message
 function handleLocation(req, res) {
@@ -50,11 +53,11 @@ function notFoundHandler(req, res) {
     res.status(404).send('Unable to process request, please try again.');
 }
 
-function handleWeather(req, res){
-    try {
-
-    }
-}
+// function handleWeather(req, res){
+//     try {
+//         const data
+//     }
+// }
 
 
 
