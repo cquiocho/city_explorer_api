@@ -32,20 +32,20 @@ Start time: 1:30pm
 Finish time: 1:50pm
 Actual time needed to complete: 20 minutes
 
-- Number and name of feature: #2 Documentation
-Estimate of time needed to complete: 30 minutes
+- Number and name of feature: #2 Locations
+Estimate of time needed to complete: 1 hour
 Start time: 1:50pm
-Finish time: 2:00pm
-Actual time needed to complete: 10 minutes
+Finish time: 3:00pm
+Actual time needed to complete: 1 hour 10 minutes
 
-- Number and name of feature: #3 Trello
-Estimate of time needed to complete: 10 minutes
-Start time: 2:00pm
-Finish time: 2:05pm
-Actual time needed to complete: 5 minutes
+- Number and name of feature: #3 Weather
+Estimate of time needed to complete: 1 hour
+Start time: 3:00pm
+Finish time: 4:50pm
+Actual time needed to complete: 1 hour 50 minutes
 
-- Number and name of feature: #4 Server
+- Number and name of feature: #4 Errors
 Estimate of time needed to complete: 60 minutes
-Start time: 2:15pm
-Finish time: 2:00pm
-Actual time needed to complete: 10 minutes
+Start time: 4:50pm
+Finish time: 5:15pm
+Actual time needed to complete: 25 minutes
