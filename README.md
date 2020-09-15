@@ -4,7 +4,7 @@
 
 ## Overview
 
-API server that will provide data for the City Explorer Application. This application will allow a user to search for a location and will be presented with a map and interesting information of the area. All data will retrieved from APIs that this server will fetch and manage.
+API server that will provide data for the City Explorer Application. This application will allow a user to search for a location and will be presented with a map and interesting information of the area. All data will be retrieved from APIs that this server will fetch and manage.
 
 ## Getting Started
 
@@ -49,3 +49,11 @@ Estimate of time needed to complete: 60 minutes
 Start time: 4:50pm
 Finish time: 5:15pm
 Actual time needed to complete: 25 minutes
+
+### Time Estimate: Lab 07
+
+- Number and name of feature: #1 Data Formatting
+Estimate of time needed to complete: 30 minutes
+Start time: 12:30pm
+Finish time: 1:50pm
+Actual time needed to complete: 20 minutes
