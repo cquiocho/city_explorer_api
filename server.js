@@ -38,7 +38,18 @@ function Weather(entry) {
     this.time = entry.datetime;
 }
 
-function Hiking()
+function Hiking(active) {
+    this.name = active.name
+    this.location = active.location
+    this.length = active.length
+    this.stars = active.stars
+    this.star_votes = active.star_votes
+    this.summary = active.summary
+    this.trail_url = active.trail_url
+    this.conditions = active.conditions
+    this.condition_date = active.condition_date
+    this.condition_time = active.condition_time
+}
 
 // Create Helper Functions & Include Error Message
 function handleLocation(req, res) {
@@ -62,7 +73,7 @@ function handleWeather(req, res){
     try {
         let city = req.query.search_query;
         let key = process.env.WEATHER_API_KEY;
-        const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}`;
+        const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}&days=8`;
         superagent.get(url)
             .then(value => {
                 let weatherData = value.body.data.map(entry => {
@@ -83,6 +94,18 @@ function handleHiking(req, res){
         const lon = req.query.longitude;
         let key = process.env.TRAIL_API_KEY;
         const url = `https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=${key}`;
+        superagent.get(url)
+            .then(active => {
+                let hikingInfo = active.map(hike => {
+                return new Hiking(hike);
+                })
+                res.status(200).send(hikingInfo);
+            })
+            }
+            catch (error) {
+                console.log(error);
+                res.status(500).send('Unable to process request, please try again.');
+            };
     }
 
 function notFoundHandler(req, res) {
