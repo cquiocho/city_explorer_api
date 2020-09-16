@@ -62,16 +62,16 @@ Actual time needed to complete: 15 minutes
 Estimate of time needed to complete: 1.5 hours
 Start time: 12:45pm
 Finish time: 2:00pm
-Actual time needed to complete:  1 hour 15 mins
+Actual time needed to complete:  1 hour 15 minutes
 
 - Number and name of feature: #3 Weather
 Estimate of time needed to complete: 1.5 hours
 Start time: 2:10pm
 Finish time: 3:15pm
-Actual time needed to complete:  1 hour 5 mins
+Actual time needed to complete:  1 hour 5 minutes
 
 - Number and name of feature: #4 Trails
 Estimate of time needed to complete: 1.5 hours
 Start time: 3:30pm
-Finish time: 
-Actual time needed to complete:  
+Finish time: 5:15pm
+Actual time needed to complete: 1 hour 45 minutes

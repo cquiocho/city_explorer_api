@@ -43,12 +43,12 @@ function Hiking(active) {
     this.location = active.location
     this.length = active.length
     this.stars = active.stars
-    this.star_votes = active.star_votes
+    this.star_votes = active.starVotes
     this.summary = active.summary
-    this.trail_url = active.trail_url
-    this.conditions = active.conditions
-    this.condition_date = active.condition_date
-    this.condition_time = active.condition_time
+    this.trail_url = active.url
+    this.conditions = active.conditionDetails
+    this.condition_date = active.conditionDate.slice(0,9);
+    this.condition_time = active.conditionDate.slice(11,19);
 }
 
 // Create Helper Functions & Include Error Message
@@ -95,11 +95,18 @@ function handleHiking(req, res){
         let key = process.env.TRAIL_API_KEY;
         const url = `https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=${key}`;
         superagent.get(url)
-            .then(active => {
-                let hikingInfo = active.map(hike => {
-                return new Hiking(hike);
+            .then(hike => {
+                // console.log(hike);
+                const hikingData = hike.body.trails;
+                console.log(hike.body.trails);
+                const hikeArray = [];
+                hikingData.forEach(active => {
+                    hikeArray.push(new Hiking(active));
                 })
-                res.status(200).send(hikingInfo);
+            //     // let hikingData = hike.body.trails.map(active => {
+            //     // return new Hiking(active);
+            //     // })
+                res.status(200).send(hikeArray);
             })
             }
             catch (error) {
