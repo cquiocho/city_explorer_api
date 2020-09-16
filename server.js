@@ -7,7 +7,6 @@ require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
-const { response } = require('express');
 
 // Application Setup
 const PORT = process.env.PORT;
@@ -93,7 +92,7 @@ function handleHiking(req, res){
         const lat = req.query.latitude;
         const lon = req.query.longitude;
         let key = process.env.TRAIL_API_KEY;
-        const url = `https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=${key}`;
+        const url = `https://www.hikingproject.com/data/get-trails?lat=${lat}&lon=${lon}&maxDistance=10&key=${key}`;
         superagent.get(url)
             .then(hike => {
                 // console.log(hike);
