@@ -6,11 +6,14 @@ require('dotenv').config();
 // Application Dependencies
 const express = require('express');
 const superagent = require('superagent');
+const pg = require('pg');
 const cors = require('cors');
 
 // Application Setup
 const PORT = process.env.PORT;
 const app = express();
+const client = new pg.Client(process.env.DATABASE_URL);
+
 app.use(cors());
 
 // Proof of Life
@@ -46,8 +49,8 @@ function Hiking(active) {
     this.summary = active.summary
     this.trail_url = active.url
     this.conditions = active.conditionDetails
-    this.condition_date = active.conditionDate.slice(0,9);
-    this.condition_time = active.conditionDate.slice(11,19);
+    this.condition_date = active.conditionDate.slice(0, 10);
+    this.condition_time = active.conditionDate.slice(11, 19);
 }
 
 // Create Helper Functions & Include Error Message
@@ -118,6 +121,12 @@ function notFoundHandler(req, res) {
     res.status(404).send('Unable to process request, please try again.');
 }
 
-app.listen(PORT, () => {
-    console.log(`listening on ${PORT}`);
-});
+function startServer() {
+    app.listen(PORT, () => {
+        console.log(`listening on ${PORT}`);
+    });
+}
+
+client.connect()
+    .then(startServer)
+    .catch(e => console.log(e))
