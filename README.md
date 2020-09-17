@@ -75,3 +75,11 @@ Estimate of time needed to complete: 1.5 hours
 Start time: 3:30pm
 Finish time: 5:15pm
 Actual time needed to complete: 1 hour 45 minutes
+
+### Time Estimate: Lab 08
+
+- Number and name of feature: #1 Database
+Estimate of time needed to complete: 1 hour
+Start time: 4:30pm
+Finish time: 5:20pm
+Actual time needed to complete: 50 minutes
