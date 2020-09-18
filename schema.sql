@@ -1,8 +1,16 @@
-DROP TABLE IF EXISTS city_location;
+DROP TABLE IF EXISTS locations, weather;
 
-CREATE TABLE city_data(
+CREATE TABLE locations(
   id SERIAL PRIMARY KEY,
-  city_name VARCHAR(255),
-  lat INT,
-  lon INT
-)
+  search_query VARCHAR(255),
+  formatted_query VARCHAR(255),
+  latitude decimal,
+  longitude decimal
+);
+
+CREATE TABLE weather(
+    id SERIAL PRIMARY KEY,
+    search_query VARCHAR(255),
+    forecast VARCHAR(255),
+    time VARCHAR(255)
+);
