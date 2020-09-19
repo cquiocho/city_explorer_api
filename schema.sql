@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS locations, weather;
+DROP TABLE IF EXISTS locations;
+DROP TABLE IF EXISTS weather;
 
 CREATE TABLE locations(
   id SERIAL PRIMARY KEY,
@@ -12,5 +13,6 @@ CREATE TABLE weather(
     id SERIAL PRIMARY KEY,
     search_query VARCHAR(255),
     forecast VARCHAR(255),
-    time VARCHAR(255)
+    time VARCHAR(255),
+    date_entered VARCHAR(255)
 );
