@@ -36,10 +36,10 @@ function handleLocation(req, res) {
         // if city is in database, send database information
         if (resultsFromSql.rowCount) {
             const chosenCity = resultsFromSql.rows[0];
-            console.log('this is what is in the database');
+            // console.log('this is what is in the database');
             res.status(200).send(chosenCity);
         } else {
-            console.log('unable to find this city, need info from API');
+            // console.log('unable to find this city, need info from API');
             const url = 'https://us1.locationiq.com/v1/search.php';
             const queryObject = {
                 key: process.env.GEOCODE_API_KEY,
@@ -50,13 +50,13 @@ function handleLocation(req, res) {
             superagent.get(url)
             .query(queryObject)
             .then(data => {
-                console.log(data.body);
+                // console.log(data.body);
                 const place = new Location(city, data.body[0]);
                 // FIRST: save new API information 
                 // SECOND: send new API information to user
                 const sql = 'INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);';
                 const safeValues = [city, place.formatted_query, place.latitude, place.longitude];
-                console.log(safeValues);
+                // console.log(safeValues);
                 client.query(sql, safeValues);
                 res.status(200).send(place);
             })
@@ -73,30 +73,48 @@ function Location(city, geoData) {
     this.longitude = geoData.lon;
 }
 
-function handleWeather(req, res){
-    try {
-        let city = req.query.search_query;
-        let key = process.env.WEATHER_API_KEY;
-        const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&key=${key}&days=8`;
-        superagent.get(url)
-            .then(value => {
-                let weatherData = value.body.data.map(entry => {
-                return new Weather(entry);
-                })
-                res.status(200).send(weatherData);
-            })
+function handleWeather(req, res) {
+    console.log(req.query);
+    let {search_query, formatted_query, latitude, longitude} = req.query;
+
+    let sql = 'SELECT * FROM weather WHERE search_query=$1;';
+    let safeValues = [search_query];
+
+    client.query(sql, safeValues)
+        .then(data => {
+            if (data.rowCount) {
+                let newWeatherData = Date.parse(new Date().toLocaleDateString()) - Date.parse(data.rows[0].date_entered) < 86400000;
+
+                if (newWeatherData) {
+                    console.log('this is our data.rows[0]', data.rows);
+                    console.log('found weather in the database');
+                    console.log('weather was less than 24 hours');
+                    res.status(200).send(data.rows);
+                } else {
+                    let key = process.env.WEATHER_API_KEY
+                    const url = `http://api.weatherbit.io/v2.0/forecast/daily?lat=${latitude}&lon=${longitude}&key=${key}`;
+                    superagent.get(url)
+                    .then(data => {
+                        var weatherUpdate = data.body.data;
+                        let allWeather = weatherUpdate.map(weather => {
+                            let newWeather = new Weather(weather);
+                            let sql = 'INSERT INTO weather (search_query, forecast, time, date_entered) VALUES ($1, $2, $3, $4);';
+                            let safeValues = [search_query, newWeather.forecast, newWeather.time, new Date()];
+                            client.query(sql, safeValues);
+                        })
+                        res.status(200).send(newWeather);
+                    })
+                    .catch (error => 
+                        res.status(500).send('Unable to process request, please try again.'));                    
+                }
             }
-            catch (error) {
-                console.log(error);
-                res.status(500).send('Unable to process request, please try again.');
-            };
+        })
 }
 
-function Weather(entry) {
-    this.forecast = entry.weather.description;
-    this.time = entry.datetime;
+function Weather(day) {
+    this.forecast = day.weather.description;
+    this.time = day.valid_date;
 }
-
 // function handleWeather(req, res) {
 //     const city = req.query.search_query;
 //     const date = new Date();
